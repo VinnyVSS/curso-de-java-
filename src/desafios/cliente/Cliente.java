@@ -11,7 +11,7 @@ public class Cliente {
     public Cliente(String nome, int idade, String email) {
         this.nome = nome;
         this.idade = idade;
-        setEmail(email); // já valida o e-mail aqui
+        setEmail(email);
     }
 
     public String getNome() {
@@ -35,13 +35,13 @@ public class Cliente {
     }
 }
 
-// Classe de cadastro (CRUD)
+
 class CadastroCliente {
     private List<Cliente> clientes = new ArrayList<>();
 
     public void adicionarCliente(Cliente cliente) {
         if (cliente.getIdade() >= 18) {
-            clientes.add(cliente); // corrigido (antes chamava cliente.add)
+            clientes.add(cliente);
             System.out.println(" Cliente adicionado: " + cliente.getNome());
         } else {
             System.out.println(" Cliente não adicionado. Idade mínima: 18 anos.");
