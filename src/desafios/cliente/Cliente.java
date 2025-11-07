@@ -44,7 +44,7 @@ class CadastroCliente {
             clientes.add(cliente);
             System.out.println(" Cliente adicionado: " + cliente.getNome());
         } else {
-            System.out.println(" Cliente não adicionado. Idade mínima: 18 anos.");
+            System.out.println(" Cliente não adicionado. Idade mínima:18 anos.");
         }
     }
 
