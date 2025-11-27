@@ -1,22 +1,27 @@
 package desafios.cliente;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
 public class Metodo {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        CadastroCliente cadastro = new CadastroCliente();
-        int select;
 
-        do {
-            System.out.println("\n---- MENU CLIENTES ----");
-            System.out.println("1 - Adicionar cliente");
-            System.out.println("2 - Listar clientes");
-            System.out.println("3 - Atualizar e-mail");
-            System.out.println("0 - Sair");
-            System.out.print("Selecione uma opção: ");
-            select = sc.nextInt();
-            sc.nextLine();
+    private static   Scanner sc = new Scanner(System.in);
+    private static CadastroCliente cadastro = new CadastroCliente();
+
+    public static void main(String[] args) {
+
+        int select =-1;
+
+        while (select !=0){
+            try {
+                System.out.println("\n---- MENU CLIENTES ----");
+                System.out.println("1 - Adicionar cliente");
+                System.out.println("2 - Listar clientes");
+                System.out.println("3 - Atualizar e-mail");
+                System.out.println("0 - Sair");
+                System.out.print("Selecione uma opção: ");
+                select = sc.nextInt();
+                sc.nextLine();
 
             switch (select) {
                 case 1:
@@ -30,8 +35,11 @@ public class Metodo {
                     int idade = sc.nextInt();
                     sc.nextLine();
 
-                    Cliente novo = new Cliente(nome, idade, email);
-                    cadastro.adicionarCliente(novo);
+                    try {
+                        cadastro.adicionarCliente(new Cliente(nome, idade, email));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    }
                     break;
 
                 case 2:
@@ -51,10 +59,12 @@ public class Metodo {
                 case 0:
                     System.out.println(" Encerrando o sistema...");
                     break;
-
             }
-        } while (select != 0);
-
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida! Digite apenas números.");
+                sc.nextLine();
+            }
+        }
         sc.close();
     }
 }

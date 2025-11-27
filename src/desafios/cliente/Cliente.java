@@ -1,7 +1,5 @@
-package desafios.cliente;
 
-import java.util.ArrayList;
-import java.util.List;
+package desafios.cliente;
 
 public class Cliente {
     private String nome;
@@ -9,6 +7,13 @@ public class Cliente {
     private String email;
 
     public Cliente(String nome, int idade, String email) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio");
+        }
+        if (idade < 0) {
+            throw new IllegalArgumentException("Idade inválida");
+        }
+
         this.nome = nome;
         this.idade = idade;
         setEmail(email);
@@ -27,53 +32,23 @@ public class Cliente {
     }
 
     public void setEmail(String email) {
-        if (email.contains("@") && email.contains(".")) {
-            this.email = email;
-        } else {
-            System.out.println(" E-mail inválido!");
+        if (email == null || !email.contains("@") || !email.contains(".")) {
+            throw new IllegalArgumentException("E-mail inválido");
         }
-    }
-}
-
-
-class CadastroCliente {
-    private List<Cliente> clientes = new ArrayList<>();
-
-    public void adicionarCliente(Cliente cliente) {
-        if (cliente.getIdade() >= 18) {
-            clientes.add(cliente);
-            System.out.println(" Cliente adicionado: " + cliente.getNome());
-        } else {
-            System.out.println(" Cliente não adicionado. Idade mínima:18 anos.");
-        }
+        this.email = email.toLowerCase();
     }
 
-    public void atualizarEmail(String nome, String novoEmail) {
-        for (Cliente c : clientes) {
-            if (c.getNome().equalsIgnoreCase(nome)) {
-                c.setEmail(novoEmail);
-                System.out.println("E-mail de " + nome + " atualizado!");
-                return;
-            }
-        }
-        System.out.println("Cliente não encontrado!");
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cliente)) return false;
+        Cliente cliente = (Cliente) o;
+        return email.equalsIgnoreCase(cliente.email);
     }
 
-    public void listarClientes() {
-        if (clientes.isEmpty()) {
-            System.out.println("Nenhum cliente cadastrado ainda.");
-            return;
-        }
-
-        System.out.println("\n-------------------------------------------------------------");
-        System.out.printf("| %-20s | %-25s | %-5s |\n", "NOME", "EMAIL", "IDADE");
-        System.out.println("-------------------------------------------------------------");
-
-        for (Cliente c : clientes) {
-            System.out.printf("| %-20s | %-25s | %-5d |\n",
-                    c.getNome(), c.getEmail(), c.getIdade());
-        }
-
-        System.out.println("-------------------------------------------------------------\n");
+    @Override
+    public int hashCode() {
+        return email.toLowerCase().hashCode();
     }
+
 }
