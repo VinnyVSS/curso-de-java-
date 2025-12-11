@@ -18,7 +18,7 @@ public class Programa {
                 System.out.println("\n---- MENU DE VEÍCULOS ----");
                 System.out.println("1 - Cadastrar veículo");
                 System.out.println("2 - Listar veículos");
-                System.out.println("3 - Testar aceleração");
+                System.out.println("3 - Acelerar veiculo");
                 System.out.println("0 - Sair");
                 System.out.print("Escolha: ");
                 opcao = Integer.parseInt(sc.nextLine());
@@ -26,7 +26,7 @@ public class Programa {
                 switch (opcao) {
                     case 1 -> cadastrarVeiculo();
                     case 2 -> listarVeiculos();
-                    case 3 -> testarAceleracao();
+                    case 3 -> acelerarVeiculo();
                     case 0 -> System.out.println("Encerrando...");
                     default -> System.out.println("Opção inválida.");
                 }
@@ -36,6 +36,13 @@ public class Programa {
             }
         }
     }
+    private static Veiculo buscarVeiculo(String modelo) {
+        return veiculos.stream()
+                .filter(v -> v.getModelo().equalsIgnoreCase(modelo))
+                .findFirst()
+                .orElse(null);
+    }
+
 
     private static void cadastrarVeiculo() {
         System.out.println("1 - Carro");
@@ -73,16 +80,19 @@ public class Programa {
         veiculos.forEach(v -> System.out.println(v.exibirInformacoes()));
     }
 
-    private static void testarAceleracao() {
-        if (veiculos.isEmpty()) {
-            System.out.println("Nenhum veículo cadastrado.");
+    private static void acelerarVeiculo() {
+        System.out.print("Digite o modelo do veículo que deseja acelerar: ");
+        String modelo = sc.nextLine();
+
+        Veiculo v = buscarVeiculo(modelo);
+
+        if (v == null) {
+            System.out.println("Veículo não encontrado!");
             return;
         }
 
-        System.out.println("\n---- ACELERANDO ----");
-        veiculos.forEach(v -> {
-            System.out.print(v.exibirInformacoes() + ": ");
-            v.acelerar();
-        });
+        System.out.println(v.exibirInformacoes());
+        v.acelerar();
     }
+
 }
