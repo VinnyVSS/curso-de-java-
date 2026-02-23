@@ -1,0 +1,4 @@
+2026-02-23T14:22:40.495809700 - Operação inválida: 3
+2026-02-23T14:24:21.156514200 - Erro de número inválido: empty String
+2026-02-23T14:24:22.341328700 - Erro de número inválido: empty String
+2026-02-23T14:24:49.610165700 - Erro de número inválido: For input string: "AS"
